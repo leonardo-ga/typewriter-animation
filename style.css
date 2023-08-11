@@ -1,7 +1,13 @@
 :root {
     --bg-color: hsl(49 37% 94%);
-    --typewriterSpeed: 6s;
+    --animation-delay: 1s;
+    --typewriterSpeed: 4s;
     --typewriterCharacters: 27;
+    --typewriterSpeed-1: 3s;
+    --typewriterSpeed-2: 1.5s;
+    --typewriterCharacters-1: 17;
+    --typewriterCharacters-2: 9;
+    --name-lenght: 5em;
 }
 
 body {
@@ -15,6 +21,7 @@ body {
 }
 
 .title {
+    font-weight: bold;
     font-size: clamp(1rem, 3vw + 1rem, 4rem);
     position: relative;
     font-family: 'Source Code Pro', monospace;
@@ -22,28 +29,6 @@ body {
 
     width: max-content;
 }
-
-.title::before,
-.title::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-}
-.title::before {
-    background: var(--bg-color);
-    animation: typewriter var(--typewriterSpeed) steps(var(--typewriterCharacters)) 1s forwards;
-}
-.title::after {
-    width: 0.125em;
-    background: black;
-    animation:
-        typewriter var(--typewriterSpeed) steps(var(--typewriterCharacters)) 1s forwards,
-        blick 750ms steps(var(--typewriterCharacters)) infinite;
-}
-
 
 .subtitle {
     color: hsl(0 0% 0% / 0.7);
@@ -55,6 +40,94 @@ body {
     animation: fadeInUp 2s ease calc(var(--typewriterSpeed) + 2s) forwards;
 }
 
+@media screen and (min-width: 768px) {
+
+    .title-1,
+    .title-2 {
+        display: inline-block;
+    }
+
+    .title::before,
+    .title::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+    .title::before {
+        background: var(--bg-color);
+        animation: typewriter var(--typewriterSpeed) steps(var(--typewriterCharacters)) var(--animation-delay) forwards;
+    }
+    .title::after {
+        width: 0.125em;
+        background: transparent;
+        animation:
+            typewriter var(--typewriterSpeed) steps(var(--typewriterCharacters)) var(--animation-delay) forwards,
+            blick 750ms steps(var(--typewriterCharacters)) infinite;
+    }
+
+}
+
+@media screen and (max-width: 768px) {
+
+    .title-2 {
+        width: fit-content;
+    }
+
+    .title-1::before,
+    .title-1::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+    .title-1::before {
+        height: calc(clamp(1rem, 3vw + 1rem, 4rem) + 5px);
+        background: var(--bg-color);
+        animation: typewriter var(--typewriterSpeed-1) steps(var(--typewriterCharacters-1)) var(--animation-delay) forwards;
+    }
+    .title-1::after {
+        height: calc(clamp(1rem, 3vw + 1rem, 4rem) + 5px);
+        width: 0.125em;
+        background: transparent;
+        animation:
+            typewriter var(--typewriterSpeed-1) steps(var(--typewriterCharacters-1)) var(--animation-delay) forwards,
+            blick 750ms steps(var(--typewriterCharacters-1)) 0s 6 forwards;
+    }
+
+    .title-2::before,
+    .title-2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+    }
+    .title-2::before {
+        width: var(--name-lenght);
+        height: calc(clamp(1rem, 3vw + 1rem, 4rem) + 5px);
+        background: var(--bg-color);
+        animation: typewriter-2 var(--typewriterSpeed-2) steps(var(--typewriterCharacters-2)) calc(var(--animation-delay) + var(--typewriterSpeed-1) + 0.9s) forwards;
+    }
+    .title-2::after {
+        height: calc(clamp(1rem, 3vw + 1rem, 4rem) + 5px);
+        width: 0.125em;
+        background: transparent;
+        animation:
+            typewriter-2 var(--typewriterSpeed-2) steps(var(--typewriterCharacters-2)) calc(var(--animation-delay) + var(--typewriterSpeed-1) + 0.9s) forwards,
+            blick 750ms steps(var(--typewriterCharacters-2)) calc( var(--animation-delay) + var(--typewriterSpeed-1) + 0.4s) infinite;
+    }
+
+}
+
+@keyframes typewriter-2 {
+    to {
+        left: var(--name-lenght);
+    }
+}
 
 @keyframes typewriter {
     to {
@@ -63,8 +136,11 @@ body {
 }
 
 @keyframes blick {
-    to {
-        background: transparent;
+    50% {
+        background: black;
+    }
+    100% {
+        background-color: transparent;
     }
 }
 
